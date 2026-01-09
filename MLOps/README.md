@@ -41,12 +41,7 @@ a grading criterion.
 
 ---
 
-## Project Scope
-The scope of the project is chosen to be:
-- More complex than basic benchmarks (e.g., MNIST, CIFAR)
-- Simpler than training large-scale models from scratch
 
-This places the project in the recommended scope described in the Day-5 project guidelines.
 
 ---
 
