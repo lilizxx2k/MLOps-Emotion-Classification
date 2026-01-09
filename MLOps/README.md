@@ -1,5 +1,4 @@
-# Machine Learning Operations 
-# Machine Learning Operations – Facial Emotion Detection
+ # Machine Learning Operations – Facial Emotion Detection
 
 ## Overall Goal
 The goal of this project is to develop an end-to-end **Machine Learning Operations (MLOps) pipeline**
