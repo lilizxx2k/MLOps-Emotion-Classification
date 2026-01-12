@@ -1,0 +1,6 @@
+name: mlopsenv
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+prefix: /opt/anaconda3/envs/mlopsenv
