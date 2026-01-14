@@ -51,7 +51,7 @@ def download_affectnet(base_path: Path):
     Download AffectNet YOLO-format dataset from Kaggle if it doesn't exist.
     Requires Kaggle API credentials (~/.kaggle/kaggle.json).
     """
-    dataset_url = "somesource/affectnet-yolo"  # Replace with actual Kaggle dataset path
+    dataset_url = "fatihkgg/affectnet-yolo-format"  
 
     zip_path = base_path / "affectnet.zip"
     if not zip_path.exists():
