@@ -12,6 +12,11 @@ __pycache__/
 
 # Profiling output
 *.prof
+reports/profiling/
+log/
+*.prof
+trace.json
+
 
 # OS files
 .DS_Store
