@@ -86,38 +86,36 @@ def evaluate(model, dataloader, criterion, device):
     return total_loss / len(dataloader), acc, example_images
 
 def main():
-    # 1. Device and Seed Setup
-    # Using 'mps' for your MacBook Air GPU performance
+    # Using 'mps' 
     DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     torch.manual_seed(42)
     
-    # 2. Initialize wandb
-    # Adding project and job_type here makes it work for both normal runs and sweeps
-    wandb.init(project="affectnet-classification", job_type="training")
+    # Initialize wandb
+     wandb.init(project="affectnet-classification", job_type="training")
 
     BASE_PATH = os.path.join(
         os.path.dirname(__file__),
         "data/raw/affectnet/YOLO_format"
     )
 
-    # 3. Extract Sweep values (Uses defaults if not a sweep)
+    # Extract Sweep values 
     LR = wandb.config.get("learning_rate", 1e-3)
     BATCH_SIZE = wandb.config.get("batch_size", 32)
     OPT_TYPE = wandb.config.get("optimizer", "adam")
     EPOCHS = 10 
 
-    # 4. Data Loading (ONLY DO THIS ONCE)
+    # Data Loading 
     train_loader, val_loader, test_loader = get_dataloaders(
         BASE_PATH,
         batch_size=BATCH_SIZE,
         img_size=224
     )
 
-    # 5. Model Setup
+    #  Model Setup
     model = Model(output_dim=NUM_CLASSES).to(DEVICE)
     criterion = nn.CrossEntropyLoss()
     
-    # 6. Optimizer Setup (Logic to choose based on sweep)
+    # Optimizer Setup 
     if OPT_TYPE == "adam":
         optimizer = optim.Adam(model.parameters(), lr=LR)
     else:
@@ -125,7 +123,7 @@ def main():
 
     logger.info(f"Starting training on {DEVICE} for {EPOCHS} epochs (LR: {LR}, Batch: {BATCH_SIZE})")
 
-    # 7. Training Loop
+    # Training Loop
     for epoch in range(EPOCHS):
         train_loss, train_acc = train(
             model, train_loader, optimizer, criterion, DEVICE
