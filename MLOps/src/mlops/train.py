@@ -9,6 +9,18 @@ from model import Model
 from labels import NUM_CLASSES
 from loguru import logger
 
+# Remove the default logger
+logger.remove()
+
+# Only WARNING and higher are shown on console
+logger.add(sys.stderr, level="WARNING")
+
+# Save DEBUG and higher with 100MB rotation
+logger.add(
+    "my_log.log", 
+    level="DEBUG", 
+    rotation="100 MB"
+)
 
 def train(model, dataloader, optimizer, criterion, device):
     model.train()

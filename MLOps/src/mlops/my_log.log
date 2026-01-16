@@ -1,0 +1,4 @@
+2026-01-16 10:39:51.158 | INFO     | data:download_affectnet:76 - Downloading fatihkgg/affectnet-yolo-format via Kaggle API...
+2026-01-16 10:40:08.792 | SUCCESS  | data:download_affectnet:85 - Download and extraction complete.
+2026-01-16 10:40:09.046 | INFO     | data:get_dataloaders:147 - Dataloaders initialized with batch_size=32
+2026-01-16 10:40:09.046 | SUCCESS  | data:get_dataloaders:148 - Dataset Split: Train=17101, Val=5406, Test=2755
