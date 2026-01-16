@@ -2,10 +2,12 @@ import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import sys
 
 from data import get_dataloaders
 from model import Model
 from labels import NUM_CLASSES
+from loguru import logger
 
 
 def train(model, dataloader, optimizer, criterion, device):
@@ -91,21 +93,26 @@ def main():
             model, val_loader, criterion, DEVICE
         )
 
-        print(
-            f"Epoch [{epoch+1}/{EPOCHS}] | "
-            f"Train Loss: {train_loss:.4f}, Acc: {train_acc:.4f} | "
-            f"Val Loss: {val_loss:.4f}, Acc: {val_acc:.4f}"
+        logger.info(f"Starting training on {DEVICE} for {EPOCHS} epochs")
+
+        logger.success(
+            f"Epoch [{epoch+1}/{EPOCHS}] complete. "
+            f"Train Acc: {train_acc:.4f}, Val Acc: {val_acc:.4f}"
         )
+        
+        # Use info for the detailed loss values
+        logger.info(f"Loss - Train: {train_loss:.4f}, Val: {val_loss:.4f}")
 
     # Final test accuracy
     test_loss, test_acc = evaluate(
         model, test_loader, criterion, DEVICE
     )
 
-    print(f"\nTest Accuracy: {test_acc:.4f}")
+    logger.warning(f"FINAL TEST ACCURACY: {test_acc:.4f}")
 
     os.makedirs("models", exist_ok=True)
     torch.save(model.state_dict(), "models/TrainedModel.pth")
+    logger.info(f"Model saved to {save_path}")
 
 
 if __name__ == "__main__":

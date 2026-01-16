@@ -1,5 +1,6 @@
 # data.py
 import kaggle
+from loguru import logger
 from pathlib import Path
 from PIL import Image
 from torch.utils.data import Dataset, DataLoader
@@ -64,38 +65,28 @@ class AffectNetDataset(Dataset):
 
 def download_affectnet(base_path: Path):
     """
-    Download AffectNet YOLO-format dataset from Kaggle if it doesn't exist.
-    Automatically extracts and flattens the folder structure.
+    Download AffectNet YOLO-format dataset using the Kaggle Python API.
     """
     dataset_url = "fatihkgg/affectnet-yolo-format"
     zip_path = base_path / "affectnet-yolo-format.zip"
 
+    # Check if images already exist
     if not (base_path / "train/images").exists():
-        # Download zip if missing
         if not zip_path.exists():
-            print("Downloading AffectNet dataset from Kaggle...")
-            subprocess.run(["python", "-m",
-                "kaggle", "datasets", "download", "-d", dataset_url,
-                "-p", str(base_path)
-            ], check=True)
-            print("Download complete.")
-
-        # Extract the zip
-        print("Extracting dataset...")
-        with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall(base_path)
-        print("Extraction complete.")
-
-        # Move contents up one level if nested
-        extracted_dir = base_path / "affectnet-yolo-format"
-        if extracted_dir.exists():
-            for item in extracted_dir.iterdir():
-                item.rename(base_path / item.name)
-            extracted_dir.rmdir()
-            print("Flattened nested folder structure.")
-
+            logger.info(f"Downloading {dataset_url} via Kaggle API...")
+            
+            # Using the official API instead of subprocess
+            kaggle.api.dataset_download_files(
+                dataset_url, 
+                path=str(base_path), 
+                unzip=True  # This handles the extraction for you!
+            )
+            
+            logger.success("Download and extraction complete.")
+        else:
+            logger.info("Zip file found, skipping download.")
     else:
-        print("AffectNet dataset already exists.")
+        logger.info("Dataset already exists.")
 
 def resolve_dataset_root(base_path: Path) -> Path:
     """
@@ -153,9 +144,8 @@ def get_dataloaders(base_path: str, batch_size: int = 32, img_size: int = 224):
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    print(f"Train samples: {len(train_dataset)}")
-    print(f"Validation samples: {len(val_dataset)}")
-    print(f"Test samples: {len(test_dataset)}")
+    logger.info(f"Dataloaders initialized with batch_size={batch_size}")
+    logger.success(f"Dataset Split: Train={len(train_dataset)}, Val={len(val_dataset)}, Test={len(test_dataset)}")
 
     return train_loader, val_loader, test_loader
 
@@ -167,5 +157,5 @@ if __name__ == "__main__":
 
     # Iterate over a batch to check
     for imgs, labels in train_loader:
-        print(f"Batch shape: {imgs.shape}, Labels: {labels}")
+        logger.debug(f"Batch Check - Images: {imgs.shape}, Labels: {labels}")
         break
