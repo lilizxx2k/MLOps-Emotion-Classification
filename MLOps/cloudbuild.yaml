@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'europe-west1-docker.pkg.dev/$PROJECT_ID/mlops-repo/emotion-mlops:latest',
+        '.'
+      ]
+
+images:
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/mlops-repo/emotion-mlops:latest'
