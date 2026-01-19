@@ -4,6 +4,8 @@ Minimal real project execution for Docker (M10)
 - Uses real model
 - Runs a real forward pass (correct shape)
 """
+# Cleaned entry point (no module references)
+
 
 import torch
 from pathlib import Path
