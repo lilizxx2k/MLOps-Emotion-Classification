@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 
 # Copy empty dataset structure (no real data needed)
-COPY data/ data/
+#COPY data/ data/
 
 # Run real project code
 CMD ["python", "src/mlops/run_project.py"]
