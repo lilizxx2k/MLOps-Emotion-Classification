@@ -40,3 +40,4 @@ wandb/
 
 # API keys
 .env
+/data
