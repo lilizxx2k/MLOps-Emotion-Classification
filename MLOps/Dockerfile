@@ -6,17 +6,23 @@ ENV PYTHONPATH=/app/src
 
 WORKDIR /app
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y gcc \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project code
 COPY src/ src/
 
-# Copy empty dataset structure (no real data needed)
-#COPY data/ data/
+# Copy models folder so FastAPI can load the trained model
+COPY models/ models/
 
-# Run real project code
-CMD ["python", "src/mlops/run_project.py"]
+# Expose port for FastAPI
+EXPOSE 8000
+
+# Run FastAPI server
+CMD ["uvicorn", "mlops.api:app", "--host", "0.0.0.0", "--port", "8000"]
+
