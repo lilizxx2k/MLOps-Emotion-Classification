@@ -3,6 +3,15 @@ from fastapi.testclient import TestClient
 from io import BytesIO
 from PIL import Image
 from mlops.api import app
+from unittest.mock import patch
+import torch
+
+
+@pytest.fixture(autouse=True)
+def mock_model_load():
+    with patch("torch.load") as mocked_load:
+        mocked_load.return_value = torch.nn.Linear(10, 2) # Just a dummy layer
+        yield
 
 def test_health_check():
     """M24: Testing functionality of health endpoint"""
