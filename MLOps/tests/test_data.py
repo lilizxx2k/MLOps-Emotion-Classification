@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 
-from mlops.data import MyDataset
+from mlops.data import AffectNetDataset
 
 
 def test_my_dataset():
