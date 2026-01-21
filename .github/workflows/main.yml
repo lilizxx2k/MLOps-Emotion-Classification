@@ -25,5 +25,15 @@ jobs:
 
       - name: Run Integration Tests
         run: |
-          export PYTHONPATH=$PYTHONPATH:$(pwd)/src
-          pytest tests/
+          # Find the src folder and add it to PYTHONPATH
+          SRC_PATH=$(find . -type d -name "src" -not -path "*/.*" | head -n 1)
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/$SRC_PATH
+          
+          # Find the tests folder and run pytest on it
+          TEST_PATH=$(find . -type d -name "tests" -not -path "*/.*" | head -n 1)
+          if [ -z "$TEST_PATH" ]; then
+            echo "Error: Could not find a 'tests' directory!"
+            exit 1
+          fi
+          
+          pytest "$TEST_PATH"
