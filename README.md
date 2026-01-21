@@ -134,4 +134,27 @@ response = requests.post(url, files=files)
 
 print(response.json())
 # Output: {"emotion": "happy", "confidence": 0.982}))
+```
+
+## Performance & Load Testing 
+
+To evaluate the reliability of the Emotion Classification API, a load test was performed using **Locust** against the live production environment on Google Cloud Run.
+
+### Test Configuration
+- **Total Requests:** 2,158
+- **Simulated Users:** 10
+- **Spawn Rate:** 1 user/second
+- **Failure Rate:** 0.0%
+
+### Detailed Metrics
+| Endpoint | # Requests | Median (ms) | 95%ile (ms) | Average (ms) | Current RPS |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `GET /health` | 377 | 160 | 170 | 160.93 | 0.60 |
+| `POST /predict` | 1,781 | 180 | 200 | 278.72 | 3.40 |
+| **Aggregated** | **2,158** | **170** | **190** | **258.14** | **4.00** |
+
+### Analysis
+- **Latency:** The model inference (`/predict`) is highly performant, with 95% of requests completed within **200ms**.
+- **Efficiency:** The average response time of **278ms** for a PyTorch-based inference on CPU-only infrastructure is well within acceptable bounds for real-time applications.
+- **Reliability:** Despite reaching 4.0 Requests Per Second (RPS), the system maintained a **0% failure rate**, confirming that the 2Gi RAM and 1 vCPU allocation on Cloud Run is sufficient for the current model architecture.
 
