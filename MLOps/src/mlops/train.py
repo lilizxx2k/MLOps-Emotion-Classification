@@ -91,7 +91,7 @@ def main():
     torch.manual_seed(42)
     
     # Initialize wandb
-     wandb.init(project="affectnet-classification", job_type="training")
+    wandb.init(project="affectnet-classification", job_type="training")
 
     BASE_PATH = os.path.join(
         os.path.dirname(__file__),
