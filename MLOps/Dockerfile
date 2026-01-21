@@ -2,7 +2,6 @@ FROM python:3.10-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH=/app/src
 
 WORKDIR /app
 
@@ -15,15 +14,14 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project code
-COPY src/ src/
+COPY src/mlops /app/mlops
 
-# Copy models folder so FastAPI can load the trained model
-COPY models/ models/
+# Copy models folder
+COPY models/ /app/models
 
-# Expose port for FastAPI
+# Expose Cloud Run port
 EXPOSE 8080
 
-# Run FastAPI server 
-CMD ["uvicorn", "mlops.api:app", "--host", "0.0.0.0", "--port", "8080"]
-
+# Use $PORT environment variable dynamically
+CMD ["sh", "-c", "uvicorn mlops.api:app --host 0.0.0.0 --port ${PORT:-8080}"]
 
