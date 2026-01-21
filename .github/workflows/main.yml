@@ -1,7 +1,39 @@
-name: Force Trigger
-on: [push]
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Wake up GitHub!"
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest httpx fastapi python-multipart pillow
+
+      - name: Run Integration Tests
+        run: |
+          # Find the src folder and add it to PYTHONPATH
+          SRC_PATH=$(find . -type d -name "src" -not -path "*/.*" | head -n 1)
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/$SRC_PATH
+          
+          # Find the tests folder and run pytest on it
+          TEST_PATH=$(find . -type d -name "tests" -not -path "*/.*" | head -n 1)
+          if [ -z "$TEST_PATH" ]; then
+            echo "Error: Could not find a 'tests' directory!"
+            exit 1
+          fi
+          
+          pytest "$TEST_PATH"
