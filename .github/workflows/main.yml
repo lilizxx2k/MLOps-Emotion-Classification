@@ -33,6 +33,10 @@ jobs:
           fi
 
       - name: Run Integration Tests
+        # Add these fake credentials to bypass the "kaggle.json not found" error
+        env:
+          KAGGLE_USERNAME: "dummy_user"
+          KAGGLE_KEY: "dummy_key"
         run: |
           # Find the src folder and add it to PYTHONPATH
           SRC_PATH=$(find . -type d -name "src" -not -path "*/.*" | head -n 1)
