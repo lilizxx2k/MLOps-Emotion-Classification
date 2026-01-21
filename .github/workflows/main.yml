@@ -19,9 +19,18 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          # Install Torch CPU version
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pytest httpx fastapi python-multipart pillow
+          
+          # Install the missing pieces explicitly
+          pip install loguru kaggle pytest httpx fastapi python-multipart pillow
+          
+          # Try to install the rest from requirements.txt
+          if [ -f MLOps/requirements.txt ]; then 
+            pip install -r MLOps/requirements.txt
+          elif [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
 
       - name: Run Integration Tests
         run: |
