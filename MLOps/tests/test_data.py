@@ -5,5 +5,5 @@ from mlops.data import MyDataset
 
 def test_my_dataset():
     """Test the MyDataset class."""
-    dataset = MyDataset("data/raw")
+    dataset = AffectNetDataset("data/raw")
     assert isinstance(dataset, Dataset)
