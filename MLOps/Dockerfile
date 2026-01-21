@@ -21,8 +21,9 @@ COPY src/ src/
 COPY models/ models/
 
 # Expose port for FastAPI
-EXPOSE 8000
+EXPOSE 8080
 
 # Run FastAPI server 
-CMD uvicorn mlops.api:app --host 0.0.0.0 --port ${PORT:-8000}
+CMD ["uvicorn", "mlops.api:app", "--host", "0.0.0.0", "--port", "8080"]
+
 
