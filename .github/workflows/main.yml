@@ -20,14 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          
-          # Install the 'Conflict Trio' first to lock them in
-          pip install "pydantic==1.10.15" "fastapi==0.103.2" "evidently==0.4.15"
-          
-          # Install Torch (CPU version for CI speed)
-          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-          
-          # Install the rest from your requirements
+          # Simply install from requirements
           pip install -r MLOps/requirements.txt
 
       - name: Run Integration Tests
