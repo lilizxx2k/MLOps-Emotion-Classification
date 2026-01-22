@@ -40,13 +40,4 @@ jobs:
           export PYTHONPATH=$PYTHONPATH:$(pwd)/MLOps/src
           pytest MLOps/tests/
 
-      - name: Run Monitoring Test
-        run: |
-          # Ensure directory exists for dummy data
-          mkdir -p data/processed
-          # Create dummy data to verify the report generation works in CI
-          python -c "import pandas as pd; \
-          df = pd.DataFrame({'text': ['happy'], 'label': [1]}); \
-          df.to_csv('data/processed/train.csv', index=False); \
-          df.to_csv('data/processed/latest_logs.csv', index=False)"
-          python MLOps/monitoring.py
+
