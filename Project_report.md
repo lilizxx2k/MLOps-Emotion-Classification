@@ -123,18 +123,14 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 1 fill here ---
+Group 32
 
 ### Question 2
 > **Enter the study number for each member in the group**
 >
-> Example:
->
-> *sXXXXXX, sXXXXXX, sXXXXXX*
->
 > Answer:
 
---- question 2 fill here ---
+s250677, 
 
 ### Question 3
 > **Did you end up using any open-source frameworks/packages not covered in the course during your project? If so**
@@ -160,31 +156,33 @@ will check the repositories and the code to verify your answers.
 > **Explain how you managed dependencies in your project? Explain the process a new team member would have to go**
 > **through to get an exact copy of your environment.**
 >
-> Recommended answer length: 100-200 words
->
-> Example:
-> *We used ... for managing our dependencies. The list of dependencies was auto-generated using ... . To get a*
-> *complete copy of our development environment, one would have to run the following commands*
->
 > Answer:
 
---- question 4 fill here ---
+We managed dependencies using Conda for the base environment and pip for project/package dependencies. The repository contains an environment.yml that pins the Python version and creates a reproducible Conda environment, and a requirements.txt (plus requirements_dev.txt) that pins the Python packages needed to run the project (and extra developer tools such as formatting/testing). The project itself is installed as an editable package (pip install -e .) using the pyproject.toml, so imports work consistently and changes to src/mlops are picked up immediately.
+
+To get an exact copy of the environment, a new team member would:
+
+Create and activate the Conda environment:
+conda env create -f environment.yml
+conda activate mlopsenv
+
+Install pinned dependencies and the project:
+pip install -r requirements.txt
+pip install -r requirements_dev.txt (optional, for development)
+pip install -e .
+
+This reproduces the same package versions and project setup across machines.
 
 ### Question 5
 
 > **We expect that you initialized your project using the cookiecutter template. Explain the overall structure of your**
 > **code. What did you fill out? Did you deviate from the template in some way?**
 >
-> Recommended answer length: 100-200 words
->
-> Example:
-> *From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder*
-> *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
-> *experiments.*
->
 > Answer:
 
---- question 5 fill here ---
+We initialized the repository from the DTU MLOps cookiecutter template, which gave us a standard project layout with separation between code, configs, experiments, outputs, and tests. The core implementation lives in src/mlops/, where we keep the model definition (model.py), dataset handling and download logic (data.py), training (train.py). Configuration is stored in configs/, trained weights are stored in models/, and generated artifacts such as profiling outputs and reports are stored in reports/. We also keep notebooks/ for exploration and tests/ for unit tests.
+
+We deviated slightly from the template by trimming (we did nor use the notebbok folder) or adding project-specific files for deployment (e.g., Dockerfile, cloudbuild.yaml) and monitoring/logging outputs (log/). Overall, we kept the cookiecutter structure but adapted it to our image-based emotion classification pipeline and Cloud Run deployment.
 
 ### Question 6
 
@@ -240,15 +238,11 @@ will check the repositories and the code to verify your answers.
 > **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *We made use of both branches and PRs in our project. In our group, each member had an branch that they worked on in*
-> *addition to the main branch. To merge code we ...*
->
 > Answer:
 
---- question 9 fill here ---
+In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
+
+In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
 
 ### Question 10
 
@@ -292,14 +286,9 @@ will check the repositories and the code to verify your answers.
 > **How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would**
 > **run a experiment.**
 >
-> Recommended answer length: 50-100 words.
->
-> Example:
-> *We used a simple argparser, that worked in the following way: Python  my_script.py --lr 1e-3 --batch_size 25*
->
 > Answer:
 
---- question 12 fill here ---
+We mainly configured experiments through simple command line arguments (e.g. selecting number of epochs), but we also used a YAML config for hyperparameter tuning with Weights & Biases sweeps. Our configs/sweep.yaml defines a random search over learning rate, batch size and optimizer, and optimizes validation accuracy.
 
 ### Question 13
 
@@ -353,15 +342,11 @@ will check the repositories and the code to verify your answers.
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
 > **try to profile your code or do you think it is already perfect?**
 >
-> Recommended answer length: 100-200 words.
->
-> Example:
-> *Debugging method was dependent on group member. Some just used ... and others used ... . We did a single profiling*
-> *run of our main code at some point that showed ...*
->
 > Answer:
 
---- question 16 fill here ---
+When running into bugs during experiments (such as training, evaluation, or API execution), we mainly relied on simple and practical debugging techniques. Most issues were identified by carefully reading Python error messages and stack traces, which often pointed directly to missing imports, incorrect paths, or shape mismatches in tensors. We also used print statements and logging (via loguru) to inspect intermediate values such as tensor shapes, model outputs, and loaded file paths during execution.
+
+We also performed basic profiling of selected scripts using Python’s built-in cProfile module to get an overview of where execution time was spent. This showed that most of the runtime was dominated by PyTorch model loading and forward passes, which is expected. We did not aim to fully optimize pe
 
 ## Working in the cloud
 
