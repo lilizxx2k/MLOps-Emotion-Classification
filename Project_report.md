@@ -302,8 +302,12 @@ will check the repositories and the code to verify your answers.
 > *one would have to do ...*
 >
 > Answer:
+We ensured reproducibility of our experiments by combining strict version control, configuration management, and experiment tracking. All code was versioned using Git, ensuring that every experiment could be traced back to a specific commit. Dependencies were fully specified in requirements.txt and environment.yml, guaranteeing that the same software environment could be recreated across machines.
 
---- question 13 fill here ---
+For experiment configuration, we used structured configuration files (via Hydra), which allowed us to define hyperparameters, data paths, and training settings in a declarative and repeatable way. Each experiment run stored its configuration alongside the results, ensuring that no parameter choices were lost.
+
+Additionally, we used Docker to containerize the training environment, capturing system-level dependencies and eliminating environment-related inconsistencies. Experiment metrics, model checkpoints, and artifacts were logged using Weights & Biases, providing a complete history of each run. To reproduce an experiment, one only needs the corresponding Git commit, configuration file, and Docker image, ensuring full reproducibility without loss of information.
+
 
 ### Question 14
 
