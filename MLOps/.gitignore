@@ -27,6 +27,8 @@ Thumbs.db
 # Data and Models
 data/
 models/
+*.pt
+*.pth
 
 # Weights & Biases logs
 wandb/
@@ -37,6 +39,5 @@ wandb/
 # Logs
 *.log
 
-# API keys
-.env
-/data
+# Pytest cache
+.pytest_cache/
