@@ -21,17 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
           
-          # Force Pydantic v1 and Evidently to avoid the ModelMetaclass error
-          pip install "pydantic<2.0" "evidently==0.4.15" pandas scikit-learn
-          
-          # Install other requirements
-          pip install loguru kaggle pytest httpx fastapi python-multipart pillow
-          
-          if [ -f MLOps/requirements.txt ]; then 
-            pip install -r MLOps/requirements.txt
-          elif [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
+          # Install everything from the corrected requirements file
+          pip install -r MLOps/requirements.txt
 
       - name: Run Integration Tests
         env:
