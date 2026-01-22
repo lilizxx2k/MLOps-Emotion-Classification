@@ -159,19 +159,19 @@ will check the repositories and the code to verify your answers.
 > Answer:
 > 
 > We managed dependencies using Conda for the base environment > and pip for project/package dependencies. The repository contains an environment.yml that pins the Python version and creates a reproducible Conda environment, and a requirements.txt (plus requirements_dev.txt) that pins the Python packages needed to run the project (and extra developer tools such as formatting/testing). The project itself is installed as an editable package (pip install -e .) using the pyproject.toml, so imports work consistently and changes to src/mlops are picked up immediately.
-
+> 
 > To get an exact copy of the environment, a new team member would:
-
-Create and activate the Conda environment:
-conda env create -f environment.yml
-conda activate mlopsenv
-
-Install pinned dependencies and the project:
-pip install -r requirements.txt
-pip install -r requirements_dev.txt (optional, for development)
-pip install -e .
-
-This reproduces the same package versions and project setup across machines.
+> 
+> Create and activate the Conda environment:
+> conda env create -f environment.yml
+> conda activate mlopsenv
+> 
+> Install pinned dependencies and the project:
+> pip install -r requirements.txt
+> pip install -r requirements_dev.txt (optional, for development)
+> pip install -e .
+> 
+> This reproduces the same package versions and project setup across machines.
 
 ### Question 5
 
@@ -179,10 +179,10 @@ This reproduces the same package versions and project setup across machines.
 > **code. What did you fill out? Did you deviate from the template in some way?**
 >
 > Answer:
-
-We initialized the repository from the DTU MLOps cookiecutter template, which gave us a standard project layout with separation between code, configs, experiments, outputs, and tests. The core implementation lives in src/mlops/, where we keep the model definition (model.py), dataset handling and download logic (data.py), training (train.py). Configuration is stored in configs/, trained weights are stored in models/, and generated artifacts such as profiling outputs and reports are stored in reports/. We also keep notebooks/ for exploration and tests/ for unit tests.
-
-We deviated slightly from the template by trimming (we did nor use the notebbok folder) or adding project-specific files for deployment (e.g., Dockerfile, cloudbuild.yaml) and monitoring/logging outputs (log/). Overall, we kept the cookiecutter structure but adapted it to our image-based emotion classification pipeline and Cloud Run deployment.
+> 
+> We initialized the repository from the DTU MLOps cookiecutter template, which gave us a standard project layout with separation between code, configs, experiments, outputs, and tests. The core implementation lives in src/mlops/, where we keep the model definition (model.py), dataset handling and download logic (data.py), training (train.py). Configuration is stored in configs/, trained weights are stored in models/, and generated artifacts such as profiling outputs and reports are stored in reports/. We also keep notebooks/ for exploration and tests/ for unit tests.
+> 
+> We deviated slightly from the template by trimming (we did nor use the notebbok folder) or adding project-specific files for deployment (e.g., Dockerfile, cloudbuild.yaml) and monitoring/logging outputs (log/). Overall, we kept the cookiecutter structure but adapted it to our image-based emotion classification pipeline and Cloud Run deployment.
 
 ### Question 6
 
@@ -239,10 +239,10 @@ We deviated slightly from the template by trimming (we did nor use the notebbok 
 > **pull request can help improve version control.**
 >
 > Answer:
+> 
+> In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
 
-In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
-
-In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
+> In our project we did not actively use branches and pull requests as part of our day-to-day workflow. We mainly worked directly on the main branch and coordinated work by dividing tasks across different files and components (e.g. one person working on the API, another on training or data handling). This worked reasonably well for our group size and project scope, but it was largely an implicit choice rather than a deliberate workflow decision.
 
 ### Question 10
 
@@ -287,8 +287,8 @@ In our project we did not actively use branches and pull requests as part of our
 > **run a experiment.**
 >
 > Answer:
-
-We mainly configured experiments through simple command line arguments (e.g. selecting number of epochs), but we also used a YAML config for hyperparameter tuning with Weights & Biases sweeps. Our configs/sweep.yaml defines a random search over learning rate, batch size and optimizer, and optimizes validation accuracy.
+> 
+> We mainly configured experiments through simple command line arguments (e.g. selecting number of epochs), but we also used a YAML config for hyperparameter tuning with Weights & Biases sweeps. Our configs/sweep.yaml defines a random search over learning rate, batch size and optimizer, and optimizes validation accuracy.
 
 ### Question 13
 
@@ -343,10 +343,10 @@ We mainly configured experiments through simple command line arguments (e.g. sel
 > **try to profile your code or do you think it is already perfect?**
 >
 > Answer:
-
-When running into bugs during experiments (such as training, evaluation, or API execution), we mainly relied on simple and practical debugging techniques. Most issues were identified by carefully reading Python error messages and stack traces, which often pointed directly to missing imports, incorrect paths, or shape mismatches in tensors. We also used print statements and logging (via loguru) to inspect intermediate values such as tensor shapes, model outputs, and loaded file paths during execution.
-
-We also performed basic profiling of selected scripts using Python’s built-in cProfile module to get an overview of where execution time was spent. This showed that most of the runtime was dominated by PyTorch model loading and forward passes, which is expected. We did not aim to fully optimize pe
+> 
+> When running into bugs during experiments (such as training, evaluation, or API execution), we mainly relied on simple and practical debugging techniques. Most issues were identified by carefully reading Python error messages and stack traces, which often pointed directly to missing imports, incorrect paths, or shape mismatches in tensors. We also used print statements and logging (via loguru) to inspect intermediate values such as tensor shapes, model outputs, and loaded file paths during execution.
+> 
+> We also performed basic profiling of selected scripts using Python’s built-in cProfile module to get an overview of where execution time was spent. This showed that most of the runtime was dominated by PyTorch model loading and forward passes, which is expected. We did not aim to fully optimize performance.
 
 ## Working in the cloud
 
