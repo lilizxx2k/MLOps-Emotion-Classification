@@ -129,8 +129,8 @@ Group 32
 > **Enter the study number for each member in the group**
 >
 > Answer:
-
-s250677, 
+> 
+> s250677, 
 
 ### Question 3
 > **Did you end up using any open-source frameworks/packages not covered in the course during your project? If so**
