@@ -11,8 +11,7 @@ dvc
 dvc-gs
 pytest
 httpx
-fastapi>=0.119.0
-pydantic>=2.0
+fastapi
 evidently==0.4.15
 pandas
 scikit-learn
