@@ -26,7 +26,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-        python -m pytest -v
+          python -m pytest -v
 
       - name: Run Integration Tests
         env:
