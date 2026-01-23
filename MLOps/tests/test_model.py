@@ -1,5 +1,5 @@
 import torch
-from model import Model
+from mlops.model import Model
 
 def test_model_output_shape():
     model = Model(output_dim=8)
@@ -27,4 +27,5 @@ def test_model_gradients():
     loss.backward()
     for param in model.parameters():
         assert param.grad is not None, "Parameter gradients should not be None"
+
 
