@@ -663,7 +663,7 @@ Over time, these challenges helped us develop a better understanding of collabor
 
 > *Student s254573 built, trained and deployed the model. This student also took care of the in charge of unit testing and code coverage for data, model and training files.*
 
->Student s250677 was responsible for identifying and sourcing the dataset used in the project via Kaggle. I also worked on debugging and profiling the codebase, including running cProfile and visualizing results with snakeviz. In addition, I worked with the monitoring and drift-detection work, testing image feature extraction for reference data.
+>Student s250677 was responsible for identifying and sourcing the dataset used in the project via Kaggle. I also worked on debugging and profiling the codebase. In addition, I worked with the monitoring and drift-detection work, testing image feature extraction for reference data.
 
 > All members independently committed their part to the GitHub repository. The questions in this document were evenly distributed among group members to ensure that each student had an overall understanding of all the code in our project.
 
