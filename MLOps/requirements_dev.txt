@@ -2,7 +2,7 @@
 -r requirements.txt
 
 # CLI tools
-invoke==2.2.0
+invoke==2.2.1
 
 # Pre-commit
 pre-commit==4.1.0
