@@ -17,7 +17,7 @@ ruff==0.11.6
 
 # Documentation
 mkdocs==1.6.1
-mkdocs-material==9.6.1
+mkdocs-material==9.7.1
 mkdocstrings-python==1.16.10
 
 # Profiling
