@@ -23,4 +23,4 @@ mkdocstrings-python==1.16.10
 # Profiling
 snakeviz==2.1.1
 torch-tb-profiler==0.5.0
-tensorboard==2.15.2
+tensorboard==2.20.0
